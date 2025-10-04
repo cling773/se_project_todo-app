@@ -9,13 +9,14 @@ const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todosList = document.querySelector(".todos__list");
 
-const openModal = (m) => m.classList.add("popup_visible");
-const closeModal = (m) => m.classList.remove("popup_visible");
+const openModal = (modalElement) => modalElement.classList.add("popup_visible");
+const closeModal = (modalElement) =>
+  modalElement.classList.remove("popup_visible");
 
 const parseLocalDate = (yyyyMmDd) => {
   if (!yyyyMmDd) return null;
-  const [y, m, d] = yyyyMmDd.split("-").map(Number);
-  return new Date(y, m - 1, d);
+  const [year, month, day] = yyyyMmDd.split("-").map(Number);
+  return new Date(year, month - 1, day);
 };
 
 const renderTodo = (data, { prepend = false } = {}) => {
