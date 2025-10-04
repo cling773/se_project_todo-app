@@ -1,14 +1,22 @@
 # Simple Todo App
 
-Give a brief description of the project here. Feel free to give it a different name.
+A minimal to-do list built with JS, ES modules, and OOP. Add tasks, mark them complete, and delete them. Form validation ensures clean input, and each new task gets a unique ID.
 
 ## Functionality
 
-Give a more detailed explanation of the project and its functionality.
+- Add, complete, and delete to-dos
+- Unique IDs for new items (`uuid`)
+- Accessible label/checkbox pairing via unique `id`/`for`
+- Client-side form validation via a `FormValidator` class
+- Modular code with ES6 classes
 
 ## Technology
 
-Give a description of the technologies and techniques used. Pictures, GIFs, or screenshots that detail the project features are recommended.
+- HTML5, Flat BEM CSS
+- `normalize.css`
+- JavaScript (ES modules)
+- OOP: `Todo` & `FormValidator` classes
+- Prettier-formatted code
 
 ## Deployment
 
