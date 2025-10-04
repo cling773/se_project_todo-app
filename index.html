@@ -16,6 +16,7 @@
           <button class="button button_action_add header__button">
             + Add Todo
           </button>
+
           <div class="popup" id="add-todo-popup">
             <div class="popup__content">
               <h3 class="popup__title">Add new ToDo</h3>
@@ -24,6 +25,7 @@
                 class="popup__close"
                 type="button"
               ></button>
+
               <form
                 class="popup__form"
                 name="add-todo-form"
@@ -45,6 +47,7 @@
                     />
                     <span class="popup__error" id="todo-name-error"></span>
                   </label>
+
                   <label class="popup__label" for="todo-date">
                     When does it need to be done? (optional)
                     <input
@@ -58,6 +61,7 @@
                     <span class="popup__error" id="todo-date-error"></span>
                   </label>
                 </fieldset>
+
                 <button class="button popup__button" type="submit">
                   Create
                 </button>
@@ -65,10 +69,12 @@
             </div>
           </div>
         </header>
+
         <main>
           <section class="counter">
             <h2 class="counter__text">Showing X out of Y completed</h2>
           </section>
+
           <section class="todos">
             <ul class="todos__list">
               <template id="todo-template">
@@ -79,7 +85,6 @@
                     <span class="todo__date"></span>
                   </label>
                   <ul class="todo__buttons">
-                    <!-- List is used to support future additional buttons -->
                     <li>
                       <button class="todo__delete-btn" type="button"></button>
                     </li>
@@ -88,10 +93,9 @@
               </template>
             </ul>
           </section>
-          <script src="./pages/index.js" defer></script>
-          <script src="./scripts/validate.js" defer></script>
         </main>
       </div>
     </div>
+    <script type="module" src="./pages/index.js"></script>
   </body>
 </html>
