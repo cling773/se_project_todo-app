@@ -22,4 +22,4 @@ A minimal to-do list built with JS, ES modules, and OOP. Add tasks, mark them co
 
 This project is deployed on GitHub Pages:
 
-- ADD LINK HERE
+(https://cling773.github.io/se_project_todo-app/)
