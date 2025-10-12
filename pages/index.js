@@ -7,13 +7,14 @@ import { Section } from "../components/Section.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import TodoCounter from "../components/TodoCounter.js";
 
-const parseLocalDate = (yyyyMmDd) => {
-  if (!yyyyMmDd) return null;
-  const [year, month, day] = yyyyMmDd.split("-").map(Number);
+const parseLocalDate = (dateString) => {
+  if (!dateString) return null;
+  const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
 };
 
 const addTodoButton = document.querySelector(".button_action_add");
+const addTodoForm = document.querySelector("#add-todo-form");
 
 const todoCounter = new TodoCounter(initialTodos, ".counter__text");
 
@@ -25,57 +26,56 @@ const createTodoElement = (todoData) => {
 const todoSection = new Section({
   items: initialTodos,
   renderer: (item) => {
-    const node = createTodoElement(item);
-    todoSection.addItem(node);
+    const todoElement = createTodoElement(item);
+    todoSection.addItem(todoElement);
   },
   containerSelector: ".todos__list",
 });
 todoSection.renderItems();
 
-const listEl = todoSection.getContainer();
+const todosListElement = todoSection.getContainer();
 
-listEl.addEventListener("change", (e) => {
-  const cb = e.target.closest(".todo__completed");
-  if (!cb) return;
-  todoCounter.updateCompleted(cb.checked);
+// Checkbox toggles completed count
+todosListElement.addEventListener("change", (event) => {
+  const todoCheckbox = event.target.closest(".todo__completed");
+  if (!todoCheckbox) return;
+  todoCounter.updateCompleted(todoCheckbox.checked);
 });
 
-listEl.addEventListener("click", (e) => {
-  const del = e.target.closest(".todo__delete-btn");
-  if (!del) return;
+todosListElement.addEventListener("todo:delete", (event) => {
+  const todoItem = event.detail.element || event.target.closest(".todo");
+  if (!todoItem) return;
 
-  const item = del.closest(".todo");
-  const wasCompleted = !!item?.querySelector(".todo__completed")?.checked;
+  const wasCompleted = !!todoItem.querySelector(".todo__completed")?.checked;
 
   todoCounter.updateTotal(false);
   if (wasCompleted) todoCounter.updateCompleted(false);
 
-  item?.remove();
+  if (todoItem.isConnected) todoItem.remove();
 });
 
-const addTodoPopup = new PopupWithForm("#add-todo-popup", (values) => {
+const addTodoPopup = new PopupWithForm("#add-todo-popup", (formValues) => {
   const newTodo = {
     id: uuidv4(),
-    name: (values.name || "").trim(),
-    date: values.date ? parseLocalDate(values.date) : null,
+    name: (formValues.name || "").trim(),
+    date: formValues.date ? parseLocalDate(formValues.date) : null,
     completed: false,
   };
 
-  const node = createTodoElement(newTodo);
-  todoSection.addItem(node, { toStart: true });
+  const newTodoElement = createTodoElement(newTodo);
+  todoSection.addItem(newTodoElement, { toStart: true });
 
   todoCounter.updateTotal(true);
 
-  validator.resetValidation();
+  formValidator.resetValidation();
   addTodoPopup.close();
 });
 addTodoPopup.setEventListeners();
 
 addTodoButton.addEventListener("click", () => {
-  validator.resetValidation();
+  formValidator.resetValidation();
   addTodoPopup.open();
 });
 
-const addTodoForm = document.querySelector("#add-todo-form");
-const validator = new FormValidator(validationConfig, addTodoForm);
-validator.enableValidation();
+const formValidator = new FormValidator(validationConfig, addTodoForm);
+formValidator.enableValidation();

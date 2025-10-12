@@ -51,7 +51,11 @@ export class Todo {
     });
 
     this._deleteBtn.addEventListener("click", () => {
-      this._element.remove();
+      const deleteEvent = new CustomEvent("todo:delete", {
+        bubbles: true,
+        detail: { element: this._element },
+      });
+      this._element.dispatchEvent(deleteEvent);
     });
   }
 
